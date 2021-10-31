@@ -8,18 +8,16 @@ DEST = "/home/filip/Games/world-of-warcraft/drive_c/Program Files (x86)/World of
 
 iszip = lambda name: name[-4:] == ".zip"
 
-for fn in os.listdir():
-    if iszip(fn):
-        print("Copying", fn)
-        shutil.copy(fn, DEST)
+total_tasks = len(os.listdir())
 
-for fn in os.listdir(DEST):
+
+for i, fn in enumerate(os.listdir()):
     if iszip(fn):
-        print("Extracting", fn)
+        print("[{0}/{1}] Copying:    {2}".format(i + 1, total_tasks, fn))
+        shutil.copy(fn, DEST)
+        print("[{0}/{1}] Extracting: {2}".format(i + 1, total_tasks, fn))
         with zipfile.ZipFile(fn, 'r') as zip_ref:
             zip_ref.extractall(DEST) 
-
-for fn in os.listdir(DEST):
-    if iszip(fn):
-        print("Removing", fn)
+        print("[{0}/{1}] Removing:   {2}".format(i + 1, total_tasks, fn))
         os.remove(DEST + '/' + fn)
+
