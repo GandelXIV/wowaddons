@@ -5,24 +5,29 @@ import sys
 import shutil
 import zipfile
 
-DEST = "/home/filip/Games/world-of-warcraft/drive_c/Program Files (x86)/World of Warcraft/_retail_/Interface/AddOns"
 
 iszip = lambda name: name[-4:] == ".zip"
 
-total_tasks = len(os.listdir())
+def rf(name):
+    with open(name, 'r') as f:
+        return f.read()
 
-def main():
+DEST = rf("destination.cfg").strip()
 
-    for i, fn in enumerate(os.listdir()):
+def install(files, dest):
+    total_tasks = len(files)
+    for i, fn in enumerate(files):
         if iszip(fn):
             print("[{0}/{1}] Copying:    {2}".format(i + 1, total_tasks, fn))
-            shutil.copy(fn, DEST)
+            shutil.copy(fn, dest)
             print("[{0}/{1}] Extracting: {2}".format(i + 1, total_tasks, fn))
             with zipfile.ZipFile(fn, 'r') as zip_ref:
-                zip_ref.extractall(DEST) 
+                zip_ref.extractall(dest) 
             print("[{0}/{1}] Removing:   {2}".format(i + 1, total_tasks, fn))
-            os.remove(DEST + '/' + fn)
+            os.remove(dest + '/' + fn)
 
+def main():
+    install(os.listdir(), DEST)
 
 if __name__ == "__main__":
     main()
