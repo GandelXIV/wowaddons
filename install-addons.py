@@ -13,6 +13,7 @@ def rf(name):
         return f.read()
 
 DEST = rf("destination.cfg").strip()
+ADDONS = "addons/"
 
 def install(files, dest):
     total_tasks = len(list(filter(lambda x: iszip(x), files)))
@@ -21,15 +22,15 @@ def install(files, dest):
         if iszip(fn):
             i += 1
             print("[{0}/{1}] Copying:    {2}".format(i , total_tasks, fn))
-            shutil.copy(fn, dest)
+            shutil.copy(ADDONS + fn, dest)
             print("[{0}/{1}] Extracting: {2}".format(i , total_tasks, fn))
-            with zipfile.ZipFile(fn, 'r') as zip_ref:
+            with zipfile.ZipFile(ADDONS + fn, 'r') as zip_ref:
                 zip_ref.extractall(dest) 
             print("[{0}/{1}] Removing:   {2}".format(i , total_tasks, fn))
             os.remove(dest + '/' + fn)
 
 def main():
-    install(os.listdir(), DEST)
+    install(os.listdir(ADDONS), DEST)
 
 if __name__ == "__main__":
     main()
