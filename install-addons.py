@@ -31,6 +31,7 @@ def install(files, dest):
 
 def main():
     install(os.listdir(ADDONS), DEST)
+    print("Done!")
 
 if __name__ == "__main__":
     main()
