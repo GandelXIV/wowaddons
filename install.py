@@ -4,6 +4,7 @@ import os
 import sys
 import shutil
 import zipfile
+from config import *
 
 
 iszip = lambda name: name[-4:] == ".zip"
@@ -16,9 +17,7 @@ def log(msg):
     if LOGS:
         print(msg)
 
-DEST = rf("destination.cfg").strip()
-ADDONS = "addons/"
-LOGS = True
+DEST = rf(DESTINATION_FILE).strip()
 
 def install(files, dest):
     total_tasks = len(list(filter(lambda x: iszip(x), files)))
