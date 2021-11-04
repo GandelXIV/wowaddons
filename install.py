@@ -25,6 +25,7 @@ def install(files, dest):
         dest_files = os.listdir(DEST)
         i = 0
         for fn in dest_files:
+            i += 1
             log("[{0}/{1}] Cleaning {2}".format(i, len(dest_files), fn))
             try:
                 shutil.rmtree(DEST + "/" + fn)
@@ -36,7 +37,7 @@ def install(files, dest):
         i += 1
         log("[{0}/{1}] Copying:    {2}".format(i , total_tasks, fn))
         shutil.copy(ADDONS + fn, dest)
-        log("[{0}/{1}] Extracting: {2}".format(i , total_tasks, fn))
+        log("[{0}/{1}] Unpacking:  {2}".format(i , total_tasks, fn))
         with zipfile.ZipFile(ADDONS + fn, 'r') as zip_ref:
             zip_ref.extractall(dest) 
         log("[{0}/{1}] Removing:   {2}".format(i , total_tasks, fn))
