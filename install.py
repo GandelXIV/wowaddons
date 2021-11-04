@@ -17,8 +17,6 @@ def log(msg):
     if LOGS:
         print(msg)
 
-DEST = rf(DESTINATION_FILE).strip()
-
 def install(files, dest):
     if CLEAN_INSTALL:
         print("Cleaning target directory...")
