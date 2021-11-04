@@ -20,6 +20,16 @@ def log(msg):
 DEST = rf(DESTINATION_FILE).strip()
 
 def install(files, dest):
+    if CLEAN_INSTALL:
+        print("Cleaning target directory...")
+        dest_files = os.listdir(DEST)
+        i = 0
+        for fn in dest_files:
+            log("[{0}/{1}] Cleaning {2}".format(i, len(dest_files), fn))
+            try:
+                shutil.rmtree(DEST + "/" + fn)
+            except NotADirectoryError:
+                 os.remove(DEST+ "/" + fn)
     total_tasks = len(list(filter(lambda x: iszip(x), files)))
     i = 0
     for fn in files:
